@@ -9,63 +9,61 @@ var SVG  = require('svgi');
 
 module.exports = NodeHelper.create({
 
-	start: function() {
-		console.log("Starting node helper: " + this.name);
-	},
+    start: function() {
+        console.log("Starting node helper: " + this.name);
+    },
 
-	socketNotificationReceived: function(notification, payload) {
-		console.error("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
+    socketNotificationReceived: function(notification, payload) {
+        console.error("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
         var self = this;
         var success = false;
-		if (notification === "FETCH_MAP"){
-			var options = {
-				host: payload.domain,
-				path: payload.path
-			};
-			var imgType = payload.useSVG ? '.svg' : '.png';
-			http.get(options, function (response) {
-				var pngFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.png';
+        if (notification === "FETCH_MAP"){
+            var options = {
+                host: payload.domain,
+                path: payload.path
+            };
+            var imgType = payload.useSVG ? '.svg' : '.png';
+            http.get(options, function (response) {
+                var pngFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.png';
                 var svgFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.svg';
-				var cachedFile = new Date().getTime() + imgType;
-//				var newImage = fs.createWriteStream(payload.mmDir + 'modules/mmm-weatherchart/cache/' + cachedFile);
-				var imagePath = '/modules/mmm-weatherchart/cache/' + cachedFile;
-				var imagePathAbs = payload.mmDir + imagePath.substring(1);
-				var incomingData = '';
-				response.on('data', function(chunk){
-					incomingData += chunk; // this probably won't work for png.
-				});
-				response.on('end', function(){
-//					newImage.end();
-					if(payload.useSVG && payload.customiseSVG){
-				        console.log("imagePath = " + imagePath);
-
-//					    var meteogram = self.readSVG(imagePathAbs);
+                var cachedFile = new Date().getTime() + imgType;
+                var imagePath = '/modules/mmm-weatherchart/cache/' + cachedFile;
+                var imagePathAbs = payload.mmDir + imagePath.substring(1);
+                var incomingData = '';
+                response.on('data', function(chunk){
+                    incomingData += chunk; // this probably won't work for png.
+                });
+                response.on('end', function(){
+                    if(payload.useSVG && payload.customiseSVG){
+                        console.log("imagePath = " + imagePath);
 
                         var customColours = new HashMap(payload.customColours);
-					    success = self.customiseSVG(incomingData, customColours, imagePathAbs);
-					}
-					else { // just write the image
-					    success = self.writeFile(incomingData, imagePathAbs);
-					}
-					
-					if(success == true){
-					    self.sendSocketNotification("MAPPED", imagePath);
-					    del([pngFiles, svgFiles, '!'+imagePathAbs]);
-					}
-					else{
-					    console.log("Customise SVG failed, sending FAILED notification ");
+                        var customSize = new HashMap(payload.customSize);
+
+                        success = self.customiseSVG(incomingData, customColours, customSize, imagePathAbs);
+                    }
+                    else { // just write the image
+                        success = self.writeFile(incomingData, imagePathAbs);
+                    }
+                    
+                    if(success == true){
+                        self.sendSocketNotification("MAPPED", imagePath);
+                        del([pngFiles, svgFiles, '!'+imagePathAbs]);
+                    }
+                    else{
+                        console.log("Customise SVG failed, sending FAILED notification ");
                         self.sendSocketNotification("FAILED", false);
-					}
-					
-					
-				});
-			});
-		}
-		
-		
-	},
-	
-	writeFile: function(data, path){
+                    }
+                    
+                    
+                });
+            });
+        }
+        
+        
+    },
+    
+    writeFile: function(data, path){
        console.log("writing file....");
        fs.writeFile(path, data, 'utf-8', function(err) {
            if(err) {
@@ -76,25 +74,25 @@ module.exports = NodeHelper.create({
            console.log("The file was saved!");
        }); 
        return true;
-	},
-	
-	
-	readSVG: function(svgFilepath){
+    },
+    
+    
+    readSVG: function(svgFilepath){
         var self = this;
-	    console.log(">> readSVG");
+        console.log(">> readSVG");
 
-	    console.log("svgFilepath = " + svgFilepath);
-	    var svgData = fs.readFileSync(svgFilepath,'utf8');
+        console.log("svgFilepath = " + svgFilepath);
+        var svgData = fs.readFileSync(svgFilepath,'utf8');
 
-	    return svgData;
+        return svgData;
         console.log("<< readSVG");
-	},
-	
-   customiseSVG: function(meteogram, customColours, svgFilepath){
+    },
+    
+   customiseSVG: function(meteogram, customColours, customSize, svgFilepath){
        var self = this;
        console.log(">> customiseSVG");
       
-       console.log("iterating....");
+       console.log("colouring in....");
        customColours.forEach(function(value, key) {
            console.log(key + ' ==> ' + value);
 
@@ -102,6 +100,20 @@ module.exports = NodeHelper.create({
            meteogram = meteogram.replace(reg, value);
        });
        
+
+       if(customSize.size > 0) {             // optional resize
+           console.log("resizing....");
+    
+           customSize.forEach(function(value, key) {
+                console.log(key + ' ==> ' + value);
+        
+                var reg = new RegExp(key);   
+                meteogram = meteogram.replace(reg, value);
+           });
+
+       }
+
+
        if(!self.writeFile(meteogram, svgFilepath)){
            return false;
        }
@@ -119,6 +131,6 @@ module.exports = NodeHelper.create({
        return true;
    
    },
-	
-	
+    
+    
 });
