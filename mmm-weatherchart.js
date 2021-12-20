@@ -71,11 +71,9 @@ Module.register("mmm-weatherchart", {
     
     getWeatherMap: function() {
         var self = this;
-        var filetype = this.config.useSVG == true ? "svg" : "png"
-        var mapLocal = this.config.path + this.config.country + "/" + this.config.area + "/" + this.config.city + "/meteogram." + filetype;
         var payload = {
             domain: this.config.domain,
-            path: mapLocal,
+            path: this.config.path,
             mmDir: this.config.mmDirectory,
             useSVG: this.config.useSVG,
             customiseSVG: this.config.customiseSVG,
