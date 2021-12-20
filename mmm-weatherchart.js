@@ -74,7 +74,6 @@ Module.register("mmm-weatherchart", {
             domain: this.config.domain,
             path: this.config.locationPath,
             mmDir: this.config.mmDirectory,
-            useSVG: this.config.useSVG,
             customiseSVG: this.config.customiseSVG,
             customColours: this.customColours,
             customSize: this.customSize
