@@ -29,10 +29,10 @@ module.exports = NodeHelper.create({
                 var imagePathAbs = payload.mmDir + imagePath.substring(1);
                 var incomingData = '';
                 response.on('data', function(chunk){
-                    incomingData += chunk; // this probably won't work for png.
+                    incomingData += chunk;
                 });
                 response.on('end', function(){
-                    if(payload.useSVG && payload.customiseSVG){
+                    if(payload.customiseSVG){
                         console.log("imagePath = " + imagePath);
 
                         var customColours = new HashMap(payload.customColours);
@@ -46,7 +46,7 @@ module.exports = NodeHelper.create({
                     
                     if(success == true){
                         self.sendSocketNotification("MAPPED", imagePath);
-                        del([pngFiles, svgFiles, '!'+imagePathAbs]);
+                        del(svgFiles, '!'+imagePathAbs]);
                     }
                     else{
                         console.log("Customise SVG failed, sending FAILED notification ");
