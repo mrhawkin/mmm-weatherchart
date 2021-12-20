@@ -1,15 +1,12 @@
 Module.register("mmm-weatherchart", {
 
     defaults: {
-        country: 'Germany',
-        area: 'North_Rhine-Westphalia',
-        city: 'Duisburg',
+        locationPath: "/en/content/2-3196359/meteogram.svg",
         updateInterval: 60 * 60 * 1000, // every hour
         hideBorder: true,
         negativeImage: true,
         retryDelay: 2500,
         domain: "www.yr.no",
-        path: "/place/",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
         useSVG: true,
         customiseSVG: true,    // change colours in hex values or "default" for no change
