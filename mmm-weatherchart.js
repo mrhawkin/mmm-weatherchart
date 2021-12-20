@@ -78,8 +78,8 @@ Module.register("mmm-weatherchart", {
             customColours: this.customColours,
             customSize: this.customSize
         };
+        Log.info("Downloading weather map from URL: " + payload.domain + payload.path);
         console.log("Downloading weather map from URL: " + payload.domain + payload.path);
-        console.log("Image type = " + filetype + " ; customiseSVG = " + this.config.customiseSVG);
 
         self.sendSocketNotification("FETCH_MAP", payload);
     },
