@@ -2,16 +2,16 @@ Module.register("mmm-weatherchart", {
 
     defaults: {
         locationPath: "/en/content/2-3196359/meteogram.svg",
-        updateInterval: 60 * 60 * 1000, // every hour
-        hideBorder: true,
+        updateInterval: 60 * 60 * 1000, // update every hour
+        hideBorder: true, 
         retryDelay: 2500,
         domain: "www.yr.no",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
-	hoursToShow: -1,
+	hoursToShow: -1, // Cut the image down to show less than the full 48 hour forecast. -1 to show everything.
         customiseSVG: true,    // change colours in hex values or "default" for no change
-        background_colour:    "#000000",
-        title_text_colour : "#d9d9d9",    // "Meteogram for...."
-        date_text_colour : "#f2f2f2",     // "Tuesday"
+        background_colour: "#000000",
+        title_text_colour: "#d9d9d9",    // "Meteogram for...."
+        date_text_colour: "#f2f2f2",     // "Tuesday"
         temperature_text_colour: "#f2f2f2", // vertical axis
         rain_text_colour: "#f2f2f2",        // amount of rain 
         below_zero_line_colour: "#74c4fe", 
