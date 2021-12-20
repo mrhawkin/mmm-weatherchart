@@ -22,11 +22,9 @@ module.exports = NodeHelper.create({
                 host: payload.domain,
                 path: payload.path
             };
-            var imgType = payload.useSVG ? '.svg' : '.png';
             http.get(options, function (response) {
-                var pngFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.png';
                 var svgFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.svg';
-                var cachedFile = new Date().getTime() + imgType;
+                var cachedFile = new Date().getTime() + '.svg';
                 var imagePath = '/modules/mmm-weatherchart/cache/' + cachedFile;
                 var imagePathAbs = payload.mmDir + imagePath.substring(1);
                 var incomingData = '';
