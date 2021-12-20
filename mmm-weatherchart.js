@@ -125,7 +125,7 @@ Module.register("mmm-weatherchart", {
             ['g id="logo-yr"', 'g id="logo-yr" fill="#231F20" '], // make yr logo visible
             ['#686e73', this.config.moon_colour_a],
             ['#6a7075', this.config.moon_colour_b],
-            ['1.3-1>', '1.3-1.7,2.2-2.1,2.4l0,0l0,0L6,12c0.8-0.5,2.9-1.4,2.9-4.4L9,0.4L9,0.4z" /></g></svg>'] // bugfix? for dodgy, unclosed yr logo xml
+           // ['1.3-1>', '1.3-1.7,2.2-2.1,2.4l0,0l0,0L6,12c0.8-0.5,2.9-1.4,2.9-4.4L9,0.4L9,0.4z" /></g></svg>'] // bugfix? for dodgy, unclosed yr logo xml
         ];
         
         return array;
