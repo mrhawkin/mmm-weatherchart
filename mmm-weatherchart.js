@@ -7,7 +7,7 @@ Module.register("mmm-weatherchart", {
         retryDelay: 2500,
         domain: "www.yr.no",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
-        customiseSVG: true,    // change colours in hex values or "default" for no change
+        customiseSVG: false,    // change colours in hex values or "default" for no change
         background_colour:    "#000000",
         title_text_colour : "#d9d9d9",    // "Meteogram for...."
         date_text_colour : "#f2f2f2",     // "Tuesday"
