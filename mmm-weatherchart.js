@@ -8,7 +8,6 @@ Module.register("mmm-weatherchart", {
         retryDelay: 2500,
         domain: "www.yr.no",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
-        useSVG: true,
         customiseSVG: true,    // change colours in hex values or "default" for no change
         background_colour:    "#000000",
         title_text_colour : "#d9d9d9",    // "Meteogram for...."
@@ -73,7 +72,7 @@ Module.register("mmm-weatherchart", {
         var self = this;
         var payload = {
             domain: this.config.domain,
-            path: this.config.locationpath,
+            path: this.config.locationPath,
             mmDir: this.config.mmDirectory,
             useSVG: this.config.useSVG,
             customiseSVG: this.config.customiseSVG,
