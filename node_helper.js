@@ -46,7 +46,7 @@ module.exports = NodeHelper.create({
                     
                     if(success == true){
                         self.sendSocketNotification("MAPPED", imagePath);
-                        del([svgFiles]);
+                        //del([svgFiles]);
                     }
                     else{
                         console.log("Customise SVG failed, sending FAILED notification ");
