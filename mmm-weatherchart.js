@@ -108,7 +108,7 @@ Module.register("mmm-weatherchart", {
             ["Meteogram for ", ''],
             [", England \\(United Kingdom\\)", ''],
             ["fill:black", 'fill:' + this.config.wind_direction_colour],
-            ['#D7EFFA', this.config.background_colour],        // outer background
+            ['white', this.config.background_colour],        // outer background
             ['rect x="0" y="0" fill="white"', 'rect x="0" y="0" fill="' + this.config.background_colour + '"'],  // inner background
             ["Arial;", "Arial; " + "fill: " + this.config.title_text_colour + ";"],
             ["#000080", this.config.title_text_colour],
