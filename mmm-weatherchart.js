@@ -7,7 +7,7 @@ Module.register("mmm-weatherchart", {
         retryDelay: 2500,
         domain: "www.yr.no",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
-        customiseSVG: false,    // change colours in hex values or "default" for no change
+        customiseSVG: true,    // change colours in hex values or "default" for no change
         background_colour:    "#000000",
         title_text_colour : "#d9d9d9",    // "Meteogram for...."
         date_text_colour : "#f2f2f2",     // "Tuesday"
@@ -40,22 +40,41 @@ Module.register("mmm-weatherchart", {
         return ["moment.js", "hashmap.js"];
     },
 
-    getDom: function() {
-        var wrapper = document.createElement("div");
+	getDom: function() {
+		var wrapper = document.createElement("div");
+		var img = document.createElement("img");
+		if (this.config.hideBorder || this.config.hoursToShow > 0) {
+			var width = 782;
+			wrapper.style.overflow = "hidden";
+			wrapper.style.position = "relative";
+			img.style.position = "absolute";
 
-        var object = document.createElement("object"); // FIX chrome not rendering temperature line when using <img> 
-        object.data = this.srcMap;
-        
-        if (this.config.hideBorder) {
-            wrapper.style.width = "810px";
-            wrapper.style.height = "241px";
-            wrapper.style.overflow = "hidden";
-            wrapper.style.position = "relative";
-        }
-        wrapper.appendChild(object);
-        
-        return wrapper;
-    },
+			if (this.config.hoursToShow > 0 && this.config.hoursToShow < 48) {
+				width = 34 + 12.5 * this.config.hoursToShow;
+			}
+
+			if (this.config.hideBorder) {
+				img.style.top = "-85px";
+				img.style.left = "0px";
+				wrapper.style.height = "360px";
+				if (width == 782) {
+					width -= 14;
+				} else { // If hoursToShow is set, we've already cut off the right-side border
+					width -= 7;
+				}
+			} else {
+				img.style.left = "0px";
+				wrapper.style.height = "380px";
+			}
+			wrapper.style.width = width + "px";
+		}
+		if (this.config.negativeImage) {
+			img.style["-webkit-filter"] = "invert(100%) grayscale(100%)";
+		}
+		img.src = this.srcMap;
+		wrapper.appendChild(img);
+		return wrapper;
+	},
 
     start: function() {
         Log.info("Starting module: " + this.name);
