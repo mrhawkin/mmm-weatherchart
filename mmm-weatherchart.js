@@ -73,7 +73,7 @@ Module.register("mmm-weatherchart", {
         var self = this;
         var payload = {
             domain: this.config.domain,
-            path: this.config.path,
+            path: this.config.locationpath,
             mmDir: this.config.mmDirectory,
             useSVG: this.config.useSVG,
             customiseSVG: this.config.customiseSVG,
