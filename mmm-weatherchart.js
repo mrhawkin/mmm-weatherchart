@@ -4,7 +4,6 @@ Module.register("mmm-weatherchart", {
         locationPath: "/en/content/2-3196359/meteogram.svg",
         updateInterval: 60 * 60 * 1000, // every hour
         hideBorder: true,
-        negativeImage: true,
         retryDelay: 2500,
         domain: "www.yr.no",
         mmDirectory: "/home/pi/MagicMirror/", // not sure whether it is possible to ask MM for this path?
