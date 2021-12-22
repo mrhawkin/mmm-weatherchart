@@ -1,7 +1,7 @@
 # Magic Mirror Module: mmm-weatherchart
 This [MagicMirror2](https://github.com/MichMich/MagicMirror) module allows you to show a weather diagram provided by http://www.yr.no
 
-![Screenshot](Screenshot.png "Screenshot")
+![Screenshot](meteogram.svg "Screenshot")
 
 
 ## About
@@ -32,26 +32,25 @@ Configure the module in your `config.js` file.
 
 ## Using the module
 
-To use this module, you must first determine country, area, and city:
+To use this module, you must first get the correct url for the location:
 
-1. go to http://www.yr.no
-2. enter your location into the search field at the top and select your city
-3. at the top-right, switch language to English
-4. write down country, area, and city from the current URL, e.g.: http://www.yr.no/place/Germany/North_Rhine-Westphalia/Duisburg/
+1. Navigate to http://www.yr.no
+2. Search for the location you want forecast for
+3. Navigate to the bottom of the table to find the link for "Forecast as SVG"
+4. Click the link to open in it in a new tab, and copy the url., e.g.: https://www.yr.no/en/content/1-2826766/meteogram.svg
+![Instructions](https://developer.yr.no/doc/assets/as-svg.png "Instructions")
+Ref: https://developer.yr.no/doc/guides/deprecating-old-widgets/
 
 Now add the module to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
     {
         module: 'mmm-weatherchart',
-        position: 'bottom_left', // this can be any of the regions
+        position: 'bottom_right', // this can be any of the regions
         config: {
-            country: 'Germany', // as determined above
-            area: 'North_Rhine-Westphalia', // as determined above
-            city: 'Duisburg', // as determined above
+			locationPath: "/en/content/2-3196359/meteogram.svg",
             updateInterval: 60 * 60 * 1000, // update every hour
             hideBorder: true, // whether or not a border with city name should be shown
-            negativeImage: true, // whether or not the default white image should be inverted
             // mmDirectory: "/home/pi/MagicMirror/" // required for caching; adjust if it differs
         }
     },
@@ -73,16 +72,8 @@ The following properties can be configured:
     <thead>
     <tbody>
         <tr>
-            <td><code>country</code></td>
-            <td>Your country as determined above</td>
-        </tr>
-        <tr>
-            <td><code>area</code></td>
-            <td>Your area as determined above</td>
-        </tr>
-        <tr>
-            <td><code>city</code></td>
-            <td>Your city name as determined above</td>
+            <td><code>locationPath</code></td>
+            <td>Your url link (after www.yr.no) which determines your location to be shown.</td>
         </tr>
         <tr>
             <td><code>updateInterval</code></td>
@@ -93,12 +84,6 @@ The following properties can be configured:
         <tr>
             <td><code>hideBorder</code></td>
             <td>Wheather or not a border with city name should be shown.
-                <br><b>Default value:</b> <code>true</code>
-            </td>
-        </tr>
-        <tr>
-            <td><code>negativeImage</code></td>
-            <td>Wheather or not the white image should be inverted.
                 <br><b>Default value:</b> <code>true</code>
             </td>
         </tr>
@@ -116,22 +101,19 @@ The following properties can be configured:
 
 Here are the extra values which can be configured.
 ```
-        useSVG: true,
-        customiseSVG: true,    // change colours in hex values or "default" for no change
-        background_colour:    "#000000",
-        title_text_colour : "#d9d9d9",    // "Meteogram for...."
-        date_text_colour : "#f2f2f2",     // "Tuesday"
-        temperature_text_colour: "#f2f2f2", // vertical axis
-        rain_text_colour: "#f2f2f2",        // amount of rain 
-        below_zero_line_colour: "#74c4fe", 
-        above_zero_line_colour: "#ffdb48",    
-        minor_gridline_colour: "#43443c",
-        major_gridline_colour: "#9d9f93",
-        wind_direction_colour: "#9d9f93",
-        rain_colour: "#83d2fe",
-        snow_colour: "#ffffff",   
-        moon_colour_a: "#afb3b6", 
-        moon_colour_b: "#acafb3",
+        customiseSVG: true, // change colours in hex values or "default" for no change
+        background_colour: "black", // background
+        text_colour: "#d9d9d9", // text
+        label_text_colour: "#f2f2f2", // label text color
+        above_zero_line_colour: "#c60000", // templine color above 0
+        below_zero_line_colour: "#006edb", // templine color below 0
+        minor_gridline_colour: "#43443c", // gridline
+        major_gridline_colour: "#9d9f93", // midnight line
+        wind_line_colour: "#aa00f2", // windline
+        rain_colour: "#0062bf", // raindrop
+        snow_colour: "#ffffff", // snow
+        moon_colour_a: "#afb3b6", // moonstart
+        moon_colour_b: "#acafb3", // moonstop
 
         // properties to override the image size. 
         // to use them, set customize_size: true
