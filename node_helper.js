@@ -10,11 +10,11 @@ var SVG  = require('svgi');
 module.exports = NodeHelper.create({
 
     start: function() {
-        console.log("Starting node helper: " + this.name);
+        console.info("Starting node helper: " + this.name);
     },
 
     socketNotificationReceived: function(notification, payload) {
-        console.error("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
+        console.info("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
         var self = this;
         var success = false;
         if (notification === "FETCH_MAP"){
@@ -33,7 +33,7 @@ module.exports = NodeHelper.create({
                 });
                 response.on('end', function(){
                     if(payload.customiseSVG){
-                        console.log("imagePath = " + imagePath);
+                        console.info("imagePath = " + imagePath);
 
                         var customColours = new HashMap(payload.customColours);
                         var customSize = new HashMap(payload.customSize);
@@ -49,7 +49,7 @@ module.exports = NodeHelper.create({
                         //del([svgFiles]);
                     }
                     else{
-                        console.log("Customise SVG failed, sending FAILED notification ");
+                        console.error("Customise SVG failed, sending FAILED notification ");
                         self.sendSocketNotification("FAILED", false);
                     }
                     
@@ -62,14 +62,14 @@ module.exports = NodeHelper.create({
     },
     
     writeFile: function(data, path){
-       console.log("writing file....");
+       console.info("writing file....");
        fs.writeFile(path, data, 'utf-8', function(err) {
            if(err) {
-               console.log(err);
+               console.error(err);
                return false;
            }
 
-           console.log("The file was saved!");
+           console.info("The file was saved!");
        }); 
        return true;
     },
@@ -77,22 +77,22 @@ module.exports = NodeHelper.create({
     
     readSVG: function(svgFilepath){
         var self = this;
-        console.log(">> readSVG");
+        console.info(">> readSVG");
 
-        console.log("svgFilepath = " + svgFilepath);
+        console.info("svgFilepath = " + svgFilepath);
         var svgData = fs.readFileSync(svgFilepath,'utf8');
 
         return svgData;
-        console.log("<< readSVG");
+        console.info("<< readSVG");
     },
     
    customiseSVG: function(meteogram, customColours, customSize, svgFilepath){
        var self = this;
-       console.log(">> customiseSVG");
+       console.info(">> customiseSVG");
       
-       console.log("colouring in....");
+       console.info("colouring in....");
        customColours.forEach(function(value, key) {
-           console.log(key + ' ==> ' + value);
+           console.info(key + ' ==> ' + value);
 
            var reg = new RegExp(key,"g");   // not the safest way to do this, but #yolo
            meteogram = meteogram.replace(reg, value);
@@ -100,10 +100,10 @@ module.exports = NodeHelper.create({
        
 
        if(customSize.size > 0) {             // optional resize
-           console.log("resizing....");
+           console.info("resizing....");
     
            customSize.forEach(function(value, key) {
-                console.log(key + ' ==> ' + value);
+                console.info(key + ' ==> ' + value);
         
                 var reg = new RegExp(key);   
                 meteogram = meteogram.replace(reg, value);
@@ -121,11 +121,11 @@ module.exports = NodeHelper.create({
            svgi.report();
        }
        catch (error){
-           console.log(error);
+           console.error(error);
            // return false;
        }
 
-       console.log("<< customiseSVG");
+       console.info("<< customiseSVG");
        return true;
    
    },
