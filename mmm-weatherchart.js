@@ -53,7 +53,7 @@ Module.register("mmm-weatherchart", {
 		if (this.config.hideBorder) {
 			img.style.top = "-85px";
 			img.style.left = "0px";
-			wrapper.style.height = "360px";
+			wrapper.style.height = "306px";
 			if (width == 782) {
 				width -= 14;
 			} else { // If hoursToShow is set, we've already cut off the right-side border
@@ -61,7 +61,7 @@ Module.register("mmm-weatherchart", {
 			}
 		} else {
 			img.style.left = "0px";
-			wrapper.style.height = "380px";
+			wrapper.style.height = "391px";
 		}
 		wrapper.style.width = width + "px";
 	}
