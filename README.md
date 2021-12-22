@@ -48,10 +48,10 @@ modules: [
         module: 'mmm-weatherchart',
         position: 'bottom_right', // this can be any of the regions
         config: {
-			locationPath: "/en/content/2-3196359/meteogram.svg",
-            updateInterval: 60 * 60 * 1000, // update every hour
-            hideBorder: true, // whether or not a border with city name should be shown
-            // mmDirectory: "/home/pi/MagicMirror/" // required for caching; adjust if it differs
+		locationPath: "/en/content/1-2826766/meteogram.svg",
+		updateInterval: 60 * 60 * 1000, // update every hour
+		hideBorder: true, // whether or not a border with city name should be shown
+		// mmDirectory: "/home/pi/MagicMirror/" // required for caching; adjust if it differs
         }
     },
 ]
