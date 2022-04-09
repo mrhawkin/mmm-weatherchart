@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 var del = require('del');
 var request = require('request'); 
@@ -22,7 +22,7 @@ module.exports = NodeHelper.create({
                 host: payload.domain,
                 path: payload.path
             };
-            http.get(options, function (response) {
+            https.get(options, function (response) {
                 var svgFiles = payload.mmDir + 'modules/mmm-weatherchart/cache/*.svg';
                 var cachedFile = new Date().getTime() + '.svg';
                 var imagePath = '/modules/mmm-weatherchart/cache/' + cachedFile;
