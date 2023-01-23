@@ -10,6 +10,7 @@ var SVG  = require('svgi');
 module.exports = NodeHelper.create({
 
     start: function() {
+        console.log("Starting node helper: " + this.name);
     },
 
     socketNotificationReceived: function(notification, payload) {
