@@ -10,11 +10,11 @@ var SVG  = require('svgi');
 module.exports = NodeHelper.create({
 
     start: function() {
-        console.info("Starting node helper: " + this.name);
+        console.log("Starting node helper: " + this.name);
     },
 
     socketNotificationReceived: function(notification, payload) {
-        console.info("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
+        console.log("Downloading weather map with signal: " + notification + " From URL: " + payload.domain + payload.path);
         var self = this;
         var success = false;
         if (notification === "FETCH_MAP"){
@@ -33,7 +33,7 @@ module.exports = NodeHelper.create({
                 });
                 response.on('end', function(){
                     if(payload.customiseSVG){
-                        console.info("imagePath = " + imagePath);
+                        console.log("imagePath = " + imagePath);
 
                         var customColours = new HashMap(payload.customColours);
                         var customSize = new HashMap(payload.customSize);
@@ -62,14 +62,14 @@ module.exports = NodeHelper.create({
     },
     
     writeFile: function(data, path){
-       console.info("writing file....");
+       console.log("writing file....");
        fs.writeFile(path, data, 'utf-8', function(err) {
            if(err) {
                console.error(err);
                return false;
            }
 
-           console.info("The file was saved!");
+           console.log("The file was saved!");
        }); 
        return true;
     },
@@ -77,20 +77,20 @@ module.exports = NodeHelper.create({
     
     readSVG: function(svgFilepath){
         var self = this;
-        console.info(">> readSVG");
+        console.log(">> readSVG");
 
-        console.info("svgFilepath = " + svgFilepath);
+        console.log("svgFilepath = " + svgFilepath);
         var svgData = fs.readFileSync(svgFilepath,'utf8');
 
         return svgData;
-        console.info("<< readSVG");
+        console.log("<< readSVG");
     },
     
    customiseSVG: function(meteogram, customColours, customSize, svgFilepath){
        var self = this;
-       console.info(">> customiseSVG");
+       console.log(">> customiseSVG");
       
-       console.info("colouring in....");
+       console.log("colouring in....");
        customColours.forEach(function(value, key) {
            console.info(key + ' ==> ' + value);
 
@@ -100,10 +100,10 @@ module.exports = NodeHelper.create({
        
 
        if(customSize.size > 0) {             // optional resize
-           console.info("resizing....");
+           console.log("resizing....");
     
            customSize.forEach(function(value, key) {
-                console.info(key + ' ==> ' + value);
+                console.log(key + ' ==> ' + value);
         
                 var reg = new RegExp(key);   
                 meteogram = meteogram.replace(reg, value);
@@ -125,7 +125,7 @@ module.exports = NodeHelper.create({
            // return false;
        }
 
-       console.info("<< customiseSVG");
+       console.log("<< customiseSVG");
        return true;
    
    },
