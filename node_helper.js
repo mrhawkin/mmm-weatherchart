@@ -10,7 +10,6 @@ var SVG  = require('svgi');
 module.exports = NodeHelper.create({
 
     start: function() {
-        console.log("Starting node helper: " + this.name);
     },
 
     socketNotificationReceived: function(notification, payload) {
@@ -33,11 +32,8 @@ module.exports = NodeHelper.create({
                 });
                 response.on('end', function(){
                     if(payload.customiseSVG){
-                        console.log("imagePath = " + imagePath);
-
                         var customColours = new HashMap(payload.customColours);
                         var customSize = new HashMap(payload.customSize);
-
                         success = self.customiseSVG(incomingData, customColours, customSize, imagePathAbs);
                     }
                     else { // just write the image
@@ -62,14 +58,11 @@ module.exports = NodeHelper.create({
     },
     
     writeFile: function(data, path){
-       console.log("writing file....");
        fs.writeFile(path, data, 'utf-8', function(err) {
            if(err) {
                console.error(err);
                return false;
            }
-
-           console.log("The file was saved!");
        }); 
        return true;
     },
@@ -77,22 +70,15 @@ module.exports = NodeHelper.create({
     
     readSVG: function(svgFilepath){
         var self = this;
-        console.log(">> readSVG");
-
-        console.log("svgFilepath = " + svgFilepath);
         var svgData = fs.readFileSync(svgFilepath,'utf8');
 
         return svgData;
-        console.log("<< readSVG");
     },
     
    customiseSVG: function(meteogram, customColours, customSize, svgFilepath){
        var self = this;
-       console.log(">> customiseSVG");
-      
-       console.log("colouring in....");
        customColours.forEach(function(value, key) {
-           console.info(key + ' ==> ' + value);
+           console.log(key + ' ==> ' + value);
 
            var reg = new RegExp(key,"g");   // not the safest way to do this, but #yolo
            meteogram = meteogram.replace(reg, value);
@@ -100,8 +86,6 @@ module.exports = NodeHelper.create({
        
 
        if(customSize.size > 0) {             // optional resize
-           console.log("resizing....");
-    
            customSize.forEach(function(value, key) {
                 console.log(key + ' ==> ' + value);
         
@@ -125,7 +109,6 @@ module.exports = NodeHelper.create({
            // return false;
        }
 
-       console.log("<< customiseSVG");
        return true;
    
    },
