@@ -71,7 +71,7 @@ Module.register("mmm-weatherchart", {
     },
 
     start: function() {
-        console.info("Starting module: " + this.name);
+        console.log("Starting module: " + this.name);
         this.loaded = false;
         this.scheduleUpdate(3); // wait some 3 secs and run initial update
         this.updateTimer = null;
@@ -90,7 +90,7 @@ Module.register("mmm-weatherchart", {
             customColours: this.customColours,
             customSize: this.customSize
         };
-        console.info("Downloading weather map from URL: " + payload.domain + payload.path);
+        console.log("Downloading weather map from URL: " + payload.domain + payload.path);
         self.sendSocketNotification("FETCH_MAP", payload);
     },
 
