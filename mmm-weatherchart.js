@@ -71,7 +71,6 @@ Module.register("mmm-weatherchart", {
     },
 
     start: function() {
-        console.log("Starting module: " + this.name);
         this.loaded = false;
         this.scheduleUpdate(3); // wait some 3 secs and run initial update
         this.updateTimer = null;
