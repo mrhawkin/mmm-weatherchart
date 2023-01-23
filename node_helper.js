@@ -78,8 +78,6 @@ module.exports = NodeHelper.create({
    customiseSVG: function(meteogram, customColours, customSize, svgFilepath){
        var self = this;
        customColours.forEach(function(value, key) {
-           console.log(key + ' ==> ' + value);
-
            var reg = new RegExp(key,"g");   // not the safest way to do this, but #yolo
            meteogram = meteogram.replace(reg, value);
        });
@@ -87,8 +85,6 @@ module.exports = NodeHelper.create({
 
        if(customSize.size > 0) {             // optional resize
            customSize.forEach(function(value, key) {
-                console.log(key + ' ==> ' + value);
-        
                 var reg = new RegExp(key);   
                 meteogram = meteogram.replace(reg, value);
            });
