@@ -19,6 +19,8 @@ Module.register("mmm-weatherchart", {
         snow_colour: "#ffffff", // snow
         moon_colour_a: "#afb3b6", // moonstart
         moon_colour_b: "#acafb3", // moonstop
+	yr_logo_circle: "#004a61", 
+        hide_branding: false,               // hide the yr, nrk & mi logos
 
 
         // properties to override the image size.
@@ -111,21 +113,44 @@ Module.register("mmm-weatherchart", {
     // return 2d array (map) of new colours to be set in the meteogram
     // key = colour; value = replacement colour from config
     createCustomColourArray: function() {
-        var array = [
-            ['rect x="0" y="0" width="782" height="391" fill="white"', 'rect x="0" y="0" width="782" height="391" fill="' + this.config.background_colour + '"'], //background
-            ['fill="currentColor"', 'fill="' + this.config.label_text_colour + '"'], //currentColor: winddirection and NRK logo
-            ["fill: #21292b;", "fill: " + this.config.text_colour + ";"], //text color
-            ["#56616c", this.config.label_text_colour], //legend-label
-            ["#c3d0d8", this.config.minor_gridline_colour], // gridline
-            ["#f2f2f2", this.config.major_gridline_colour], // midnight line
-            ["#47c0e3", this.config.snow_colour],  //snow
-            ["#0062bf", this.config.rain_colour],  //raindrop
-            ['#686e73', this.config.moon_colour_a], //moonstart
-            ['#6a7075', this.config.moon_colour_b], //moonstop
-            ["#aa00f2", this.config.wind_line_colour], //windline
-            ["#c60000", this.config.above_zero_line_colour], //templine color above 0
-            ["#006edb", this.config.below_zero_line_colour] //templine color below 0
+       var array = [
+            ["Weather forecast for ", ''],
+            ['currentColor', this.config.default_fill_colour],  // wind arrows, etc
+            ['fill="white', 'fill="'+this.config.background_colour],
+            ['fill="#ffffff', 'fill="'+this.config.background_colour],
+            ['fill: #ffffff', 'fill: '+this.config.background_colour],
+            ['background-color:#ffffff', 'background-color:'+this.config.background_colour],
+            ["#21292b", this.config.default_text_colour],
+            ["#56616c", this.config.label_text_colour],
+            ["#c3d0d8", this.config.minor_gridline_colour],
+            ["#56616c", this.config.major_gridline_colour],
+            ["#c60000", this.config.above_zero_line_colour],
+            ['stop-color="#006edb', 'stop-color="' + this.config.below_zero_line_colour],
+            ["#47c0e3", this.config.snow_colour],  
+            ["#006EDB", this.config.rain_colour],                       // rain drop
+            ['fill="#006edb', 'fill="' + this.config.rain_colour],      // rain level
+            ['height="20%" fill="' + this.config.rain_colour, 'height="20%" fill="' + this.config.below_zero_line_colour],  // revert the temperature key
+            ['#00b9f1', this.config.yr_logo_circle ], 
+            ['#686e73', this.config.moon_colour_a],
+            ['#6a7075', this.config.moon_colour_b],
+            ['1.3-1>', '1.3-1.7,2.2-2.1,2.4l0,0l0,0L6,12c0.8-0.5,2.9-1.4,2.9-4.4L9,0.4L9,0.4z" /></g></svg>'] // bugfix? for dodgy, unclosed yr logo xml
         ];
+
+        if(this.config.hide_branding) {
+            var branding = [
+                ['width="30"', 'width="0"'],                    // hide yr logo
+                ['height="30"', 'height="0"'],
+                ['Served by', ''],
+                ['width="39.5"', 'width="0"'],                  // hide nrk logo
+                ['height="13.941176470588236"', 'height="0"'],
+                ['width="82.5"', 'width="0"'],       //hide Met. Institutt logo
+                ['height="22.247191011235955"', 'height="0"']
+
+            ];
+
+            array = array.concat(branding);
+        }
+        
         return array;
     },
 
